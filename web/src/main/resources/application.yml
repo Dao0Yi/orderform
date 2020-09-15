@@ -1,0 +1,27 @@
+server:
+  port: 6060
+spring:
+  application:
+    name: order-web  #定义服务的名称！！！
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+    username: root
+    password: root
+eureka:
+  client:
+    service-url:
+     defaultZone: http://127.0.0.1:8080/eureka/
+  instance:
+    prefer-ip-address: true
+
+
+pagehelper:
+  helper-dialect: oracle
+  reasonable: true
+  support-methods-arguments: true
+  offset-as-page-num: false
+  row-bounds-with-count: false
+  page-size-zero: false
+  close-conn: true
+  auto-runtime-dialect: true

@@ -1,0 +1,16 @@
+server:
+  port: 6606
+spring:
+  application:
+    name: order-product
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+    username: orderproduct
+    password: 6666
+eureka:
+  client:
+    service-url:
+     defaultZone: http://127.0.0.1:8080/eureka/
+  instance:
+    prefer-ip-address: true

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--1.引入 bootstrap 框架全局样式 -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css"/>
+    <!--2.引入 Layer 弹窗的样式 -->
+    <link rel="stylesheet" href="layer/layer/theme/default/layer.css"/>
+    <!--3.引入 jquery 框架类库 -->
+    <script src="bootstrap/js/jquery.min.js"></script>
+    <!--4.引入 bootstrap 框架类库 -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <!--5.引入 Layer 弹窗的类库 -->
+    <script src="layer/layer/layer.js"></script>
+    <!--6.引入 angularJS 框架类库 -->
+    <script src="angularjs/angular.min.js"></script>
+    <!--7.引入 angularJS 框架分页的类库 -->
+    <script src="angularjs/pagination.js"></script>
+    <!--8.引入 Layer 弹窗的类库 -->
+    <script src="layer/layer/layer.js"></script>
+    <!--9.定义自己写的 javascript 代码： -->
+    <script>
+
+        //创建模块
+        var app = angular.module("MyApp", []);
+        //创建控制器
+        app.controller("ProductController", function ($scope, $http) {
+            /*$scope.getPid = function (key) {
+                var reg = new RegExp("(^|&)"+ key +"=([^&]*)(&|$)");
+                var r = window.location.search.substr(1).match(reg);
+                if(r!=null)return  unescape(r[2]); return null;
+            };*/
+            $scope.seeOne = function () {
+                function pid (key){
+                    var reg = new RegExp("(^|&)"+key+"=([^&]*)(&|$)");
+                    var r = window.location.search.substr(1).match(reg);
+                    if(r!=null)return  unescape(r[2]); return null;
+                };
+                alert(pid("pid"));
+                //向后台查询数据
+                $http({
+                    method: 'post',
+                    url: "/gw/p2" ,
+                    params: {"pid": pid("pid")}
+                }).success(function (data) {
+                    $scope.productDetail = data.data;
+                })
+            };
+            $scope.addCar = function (pid) {
+                //向后台查询数据
+                $http({
+                    method: 'post',
+                    url: "/gw/p3/" +pid
+                }).success(function (data) {
+                    alert(data.msg)
+                })
+            };
+
+        });
+    </script>
+</head>
+<body ng-app="MyApp" ng-controller="ProductController" ng-init="seeOne()">
+<div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">产品详情</div>
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped text-center table-container table-hover table-responsive table-bordered">
+                <tr>
+                    <td>编号</td>
+                    <td>{{productDetail.pid}}</td>
+                </tr>
+                <tr>
+                    <td>产品名称</td>
+                    <td>{{productDetail.pname}}</td>
+                </tr>
+                <tr>
+                    <td>价格</td>
+                    <td>{{productDetail.pprice}}</td>
+                </tr>
+                <tr >
+                    <td colspan="2">...</td>
+                </tr>
+                <tr >
+                    <td><button class="btn btn-success" ng-cloak="addCar(productDetail.pid)">加入购物车</button></td>
+                    <td><a href="car.html" class="btn btn-success">查看购物车</a></td>
+                </tr>
+            </table>
+        </div>
+        <div class="panel-footer text-right">正翼友情贡献</div>
+    </div>
+</div>
+
+</body>
+</html>

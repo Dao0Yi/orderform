@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <!--1.引入 bootstrap 框架全局样式 -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css"/>
+    <!--2.引入 Layer 弹窗的样式 -->
+    <link rel="stylesheet" href="layer/layer/theme/default/layer.css"/>
+    <!--3.引入 jquery 框架类库 -->
+    <script src="bootstrap/js/jquery.min.js"></script>
+    <!--4.引入 bootstrap 框架类库 -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <!--5.引入 Layer 弹窗的类库 -->
+    <script src="layer/layer/layer.js"></script>
+    <!--6.引入 angularJS 框架类库 -->
+    <script src="angularjs/angular.min.js"></script>
+    <!--7.引入 angularJS 框架分页的类库 -->
+    <script src="angularjs/pagination.js"></script>
+    <!--8.引入 Layer 弹窗的类库 -->
+    <script src="layer/layer/layer.js"></script>
+    <!--9.定义自己写的 javascript 代码： -->
+    <script>
+        //创建模块
+        var app = angular.module("MyApp", ['pagination']);
+        //创建控制器
+        app.controller("ProductController", function ($scope, $http) {
+            //创建分页配置对象
+            $scope.paginationConf = {
+                //当前页码
+                currentPage: 1,
+                //总页数
+                totalItems: 5,
+                //每页显示数量
+                itemsPerPage: 2,
+                //每页显示条目数
+                perPageOptions: [5, 10, 20, 50],
+                //改变页码时执行方法
+                onChange: function () {
+                    $scope.search($scope.paginationConf.currentPage, $scope.paginationConf.itemsPerPage);
+                }
+            };
+            $scope.search = function (pageIndex, pageSize) {
+                //向后台查询数据
+                $http.post("gw/g1",$scope.user).success(function (data) {
+                    if (data.code == 200) {
+                        window.location.href = "production.html";
+                    } else {
+                        alert("用户名密码有误")
+                    }
+
+                });
+            };
+
+        });
+    </script>
+</head>
+<body ng-app="MyApp" ng-controller="ProductController" ng-init="onChange()">
+<div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">产品列表</div>
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped text-center table-container table-hover table-responsive table-bordered">
+                <tr>
+                    <td>编号</td>
+                    <td>产品名称</td>
+                    <td>价格</td>
+                    <td>操作</td>
+                </tr>
+                <tr  ng-repeat="p in lists" >
+                    <td>{{p.pid}}</td>
+                    <td><a  href="detail.html?pid={{p.pid}}">{{p.pname}}</a></td>
+                    <td>{{p.pprice}}元</td>
+                    <td>
+                        <a ng-cloak="joinCar(p.pid)" class='btn btn-success'>加入购物车</a>
+                    </td>
+                </tr>
+            </table>
+            <tm-pagination conf="paginationConf"></tm-pagination>
+        </div>
+        <div class="panel-footer text-right">正翼友情贡献</div>
+    </div>
+</div>
+
+</body>
+
+
+</html>

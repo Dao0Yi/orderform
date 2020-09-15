@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--1.引入 bootstrap 框架全局样式 -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css"/>
+    <!--2.引入 Layer 弹窗的样式 -->
+    <link rel="stylesheet" href="layer/layer/theme/default/layer.css"/>
+    <!--3.引入 jquery 框架类库 -->
+    <script src="bootstrap/js/jquery.min.js"></script>
+    <!--4.引入 bootstrap 框架类库 -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <!--5.引入 Layer 弹窗的类库 -->
+    <script src="layer/layer/layer.js"></script>
+    <!--6.引入 angularJS 框架类库 -->
+    <script src="angularjs/angular.min.js"></script>
+    <!--7.引入 angularJS 框架分页的类库 -->
+    <script src="angularjs/pagination.js"></script>
+    <!--8.引入 Layer 弹窗的类库 -->
+    <script src="layer/layer/layer.js"></script>
+    <!--9.定义自己写的 javascript 代码： -->
+    <script>
+
+        //创建模块
+        var app = angular.module("MyApp", []);
+        //创建控制器
+        app.controller("ProductController", function ($scope, $http) {
+
+        });
+    </script>
+</head>
+<body ng-app="MyApp" ng-controller="ProductController" >
+<div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">订单详情</div>
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped text-center table-container table-hover table-responsive table-bordered">
+                <tr>
+                    <td>编号</td>
+                    <td>产品名称</td>
+                    <td>数量</td>
+                    <td>操作</td>
+                </tr>
+                <tr  ng-repeat="d in lists" >
+                    <td>{{d.pid}}</td>
+                    <td>{{d.pname}}</td>
+                    <td>{{d.pprice}}个</td>
+                    <td>
+                        <a ng-cloak="del(p.pid)" class='btn btn-danger'>移除购物车</a>
+                    </td>
+                </tr>
+                <tr><td colspan="4"><a href="" class='btn btn-danger'>立即结算</a></td></tr>
+            </table>
+        </div>
+        <div class="panel-footer text-right">正翼友情贡献</div>
+    </div>
+</div>
+</body>
+</html>

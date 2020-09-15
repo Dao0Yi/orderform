@@ -1,0 +1,16 @@
+server:
+  port: 6660
+spring:
+  application:
+    name: order-user  #定义服务的名称！！！
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+    username: orderuser
+    password: 6666
+eureka:
+  client:
+    service-url:
+     defaultZone: http://127.0.0.1:8080/eureka/
+  instance:
+    prefer-ip-address: true
